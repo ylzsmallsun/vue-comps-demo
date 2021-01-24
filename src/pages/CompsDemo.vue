@@ -1,22 +1,31 @@
 <template>
-  <div class="wrapper">
-    <Progress :value="percentage"/>
-    <input class="startBtn" type="button" value="Start" @click="luanchLoading"/>
+  <div>
+    <div class="wrapper">
+      <Progress :value="percentage"/>
+      <input class="startBtn" type="button" value="Start" @click="luanchLoading"/>
+    </div>
+    <div class="btn" @click="showToast">点击出弹窗提示</div>
+    <Toast ref="toast" :message="toastMsg" :time="duration"/>
   </div>
 </template>
 <script>
 import Progress from '../components/Progress.vue'
+import Toast from '../components/Toast.vue'
 export default {
-  name: 'ProgressDemo',
+  name: 'CompsDemo',
   components: {
-    Progress
+    Progress,
+    Toast
   },
   data () {
     return {
       percentage: 0,
       barHeight: 20,
       upLoading: false,
-      timer: null
+      timer: null,
+      duration: 2000,
+      isShowToast: false,
+      toastMsg: '操作成功'
     }
   },
   watch: {
@@ -41,6 +50,9 @@ export default {
           this.percentage ++
         },100)
       }
+    },
+    showToast () {
+      this.$refs['toast'].show()
     }
   }
 }
@@ -56,5 +68,11 @@ export default {
   padding: 10px;
   margin-left: 10px;
   font-size: 20px;
+}
+.btn {
+  width: 120px;
+  background: blue;
+  color: #ffffff;
+  margin: 10px auto;
 }
 </style>
